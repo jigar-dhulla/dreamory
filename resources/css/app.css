@@ -8,4 +8,23 @@
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+
+    /* Dreamory Color Palette - Customize these later */
+    --color-primary: #667eea;
+    --color-primary-dark: #5a67d8;
+    --color-secondary: #764ba2;
+    --color-accent: #ff6b6b;
+    --color-accent-warm: #feca57;
+    --color-gradient-start: #667eea;
+    --color-gradient-end: #764ba2;
+
+    /* Semantic Colors */
+    --color-background: #f8f9fa;
+    --color-surface: #ffffff;
+    --color-border: #e5e7eb;
+    --color-text-primary: #1f2937;
+    --color-text-secondary: #6b7280;
+    --color-success: #10b981;
+    --color-warning: #f59e0b;
+    --color-error: #ef4444;
 }
