@@ -2,7 +2,7 @@
     <!-- Hero Section with Image -->
     <div class="relative h-80 overflow-hidden" style="background: linear-gradient(135deg, var(--color-gradient-start), var(--color-gradient-end));">
         @if($event->photo_path)
-            <img src="{{ Storage::url($event->photo_path) }}" class="w-full h-full object-cover opacity-90" alt="{{ $event->name }}">
+            <img src="{{ $event->getPhoto() }}" class="w-full h-full object-cover opacity-90" alt="{{ $event->name }}">
         @endif
 
         <!-- Back Button -->
@@ -12,15 +12,14 @@
 
         <!-- Action Buttons -->
         <div class="absolute top-12 right-4 flex gap-2">
+            <!-- Edit Button -->
             <a href="/events/{{ $event->id }}/edit" class="w-9 h-9 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-sm shadow-lg cursor-pointer">
                 ✏️
             </a>
-            <div class="w-9 h-9 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-sm shadow-lg cursor-pointer">
-                💝
-            </div>
-            <div class="w-9 h-9 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-sm shadow-lg cursor-pointer">
-                📤
-            </div>
+            <!-- Delete Button -->
+            <button type="button" wire:click="delete" href="#" class="w-9 h-9 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-sm shadow-lg cursor-pointer">
+                🗑️
+            </button>
         </div>
 
         <!-- Hero Overlay -->

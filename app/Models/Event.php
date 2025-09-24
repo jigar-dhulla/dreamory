@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Event extends Model
 {
@@ -36,5 +37,12 @@ class Event extends Model
             'date_attended' => 'date',
             'overall_rating' => 'integer',
         ];
+    }
+
+    public function getPhoto(): string
+    {
+        $data = base64_encode(Storage::get($this->photo_path));
+        $mimeType = Storage::mimeType($this->photo_path);
+        return "data:$mimeType;base64,$data";
     }
 }

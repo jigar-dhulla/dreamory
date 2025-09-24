@@ -84,24 +84,41 @@
                 @error('overall_rating') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
 
-            <!-- Photo Upload -->
+            <!-- Photo Selection -->
             <div class="mb-6">
                 <label class="block text-sm font-medium mb-2" style="color: var(--color-text-primary);">Photo</label>
                 <div class="border-2 border-dashed rounded-xl p-6 text-center" style="border-color: var(--color-border);">
-                    @if ($photo)
+                    @if (count($photos) > 0)
+                        @foreach($photos as $photo)
+                            <div class="mb-3">
+                                <img src="{{ $photo }}" alt="Selected Photo" class="w-24 h-24 rounded-xl mx-auto object-cover mb-2">
+                            </div>
+                        @endforeach
+                        <button
+                            type="button"
+                            wire:click="pickImage"
+                            class="px-6 py-2 rounded-lg font-medium text-sm mb-2"
+                            style="background-color: var(--color-primary); color: white;"
+                        >
+                            Change Photo
+                        </button>
+                    @else
                         <div class="mb-3">
-                            <img src="{{ $photo->temporaryUrl() }}" class="w-24 h-24 object-cover rounded-xl mx-auto">
+                            <div class="w-24 h-24 rounded-xl mx-auto flex items-center justify-center text-4xl" style="background-color: var(--color-background);">
+                                📷
+                            </div>
                         </div>
+                        <button
+                            type="button"
+                            wire:click="pickImage"
+                            class="px-6 py-3 rounded-lg font-medium"
+                            style="background-color: var(--color-primary); color: white;"
+                        >
+                            Select Photo
+                        </button>
                     @endif
-                    <input
-                        type="file"
-                        wire:model="photo"
-                        accept="image/*"
-                        class="w-full"
-                    >
-                    <p class="text-sm mt-2" style="color: var(--color-text-secondary);">Upload an image (max 2MB)</p>
+                    <p class="text-sm mt-2" style="color: var(--color-text-secondary);">Tap to select an image from your gallery</p>
                 </div>
-                @error('photo') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
 
             <!-- Notes -->
