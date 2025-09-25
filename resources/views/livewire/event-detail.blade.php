@@ -109,23 +109,6 @@
     </div>
     @endif
 
-    <!-- Photo Section -->
-    @if($event->photo_path)
-    <div style="background-color: var(--color-surface);" class="mx-4 mt-4 rounded-2xl p-5 shadow-sm">
-        <div class="flex justify-between items-center mb-4">
-            <h3 class="text-lg font-bold" style="color: var(--color-text-primary);">Photos</h3>
-            <span class="text-sm font-medium cursor-pointer" style="color: var(--color-primary);">View All</span>
-        </div>
-        <div class="grid grid-cols-3 gap-2">
-            <div class="col-span-2 row-span-2 aspect-square rounded-xl overflow-hidden">
-                <img src="{{ Storage::url($event->photo_path) }}" class="w-full h-full object-cover" alt="{{ $event->name }}">
-            </div>
-            <div class="aspect-square rounded-xl overflow-hidden" style="background: linear-gradient(45deg, var(--color-primary), var(--color-gradient-end));"></div>
-            <div class="aspect-square rounded-xl overflow-hidden" style="background: linear-gradient(45deg, var(--color-primary), var(--color-gradient-end));"></div>
-        </div>
-    </div>
-    @endif
-
     <!-- Event Details Section -->
     <div style="background-color: var(--color-surface);" class="mx-4 mt-4 rounded-2xl p-5 shadow-sm">
         <h3 class="text-lg font-bold mb-4" style="color: var(--color-text-primary);">Event Details</h3>
