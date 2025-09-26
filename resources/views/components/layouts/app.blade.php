@@ -18,19 +18,19 @@
     <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 h-20">
         <div class="flex justify-around items-center h-full">
             <a href="/" class="flex flex-col items-center gap-1 text-sm" style="color: {{ request()->is('/') ? 'var(--color-primary)' : 'var(--color-text-secondary)' }}">
-                <div class="text-xl">🏠</div>
+                <x-lucide-home class="w-6 h-6" />
                 <span class="text-xs">Home</span>
             </a>
             <a href="/events" class="flex flex-col items-center gap-1 text-sm" style="color: {{ request()->is('events*') ? 'var(--color-primary)' : 'var(--color-text-secondary)' }}">
-                <div class="text-xl">📅</div>
+                <x-lucide-calendar class="w-6 h-6" />
                 <span class="text-xs">Events</span>
             </a>
             <a href="/dreams" class="flex flex-col items-center gap-1 text-sm" style="color: {{ request()->is('dreams*') ? 'var(--color-primary)' : 'var(--color-text-secondary)' }}">
-                <div class="text-xl">🌟</div>
+                <x-lucide-star class="w-6 h-6" />
                 <span class="text-xs">Dreams</span>
             </a>
             <a href="/stats" class="flex flex-col items-center gap-1 text-sm" style="color: {{ request()->is('stats*') ? 'var(--color-primary)' : 'var(--color-text-secondary)' }}">
-                <div class="text-xl">📊</div>
+                <x-lucide-bar-chart class="w-6 h-6" />
                 <span class="text-xs">Stats</span>
             </a>
         </div>

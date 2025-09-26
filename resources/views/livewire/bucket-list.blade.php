@@ -3,7 +3,7 @@
     <div style="background-color: var(--color-surface);" class="p-4 border-b flex justify-between items-center" style="border-color: var(--color-border);">
         <h2 class="text-xl font-semibold" style="color: var(--color-text-primary);">My Dreams</h2>
         <a href="/dreams/create" class="w-9 h-9 rounded-full flex items-center justify-center text-white text-lg" style="background-color: var(--color-primary);">
-            +
+            <x-lucide-plus class="w-5 h-5" />
         </a>
     </div>
 
@@ -50,11 +50,11 @@
                     </div>
                     <div class="flex items-center gap-2 ml-3">
                         @if($item->is_completed)
-                            <div class="text-green-500 text-lg">✅</div>
+                            <x-lucide-check-circle class="w-5 h-5 text-green-500" />
                         @endif
                         <div class="flex gap-1">
                             @for($i = 1; $i <= $item->priority; $i++)
-                                <span class="text-sm">⭐</span>
+                                <x-lucide-star class="w-3 h-3 fill-current text-yellow-400" />
                             @endfor
                         </div>
                     </div>
@@ -71,33 +71,33 @@
                 <div class="flex gap-2 flex-wrap">
                     @if($item->is_completed)
                         <span class="px-2 py-1 rounded-xl text-xs text-green-600" style="background-color: #f0fdf4;">
-                            ✨ Achieved
+                            <x-lucide-sparkles class="w-3 h-3 inline mr-1" /> Achieved
                         </span>
                         @if($item->linkedEvent)
                             <span class="px-2 py-1 rounded-xl text-xs text-purple-600" style="background-color: #faf5ff;">
-                                🎯 Linked to Event
+                                <x-lucide-target class="w-3 h-3 inline mr-1" /> Linked to Event
                             </span>
                         @endif
                     @else
                         <span class="px-2 py-1 rounded-xl text-xs text-blue-600" style="background-color: #eff6ff;">
-                            🎯 In Progress
+                            <x-lucide-target class="w-3 h-3 inline mr-1" /> In Progress
                         </span>
                         @if($item->priority >= 4)
                             <span class="px-2 py-1 rounded-xl text-xs text-red-600" style="background-color: #fef2f2;">
-                                🔥 High Priority
+                                <x-lucide-flame class="w-3 h-3 inline mr-1" /> High Priority
                             </span>
                         @endif
                     @endif
                     @if($item->target_date && $item->target_date->isPast() && !$item->is_completed)
                         <span class="px-2 py-1 rounded-xl text-xs text-orange-600" style="background-color: #fff7ed;">
-                            ⏰ Overdue
+                            <x-lucide-clock class="w-3 h-3 inline mr-1" /> Overdue
                         </span>
                     @endif
                 </div>
             </a>
         @empty
             <div style="background-color: var(--color-surface);" class="rounded-xl p-8 text-center">
-                <div class="text-5xl mb-4">🌟</div>
+                <x-lucide-star class="w-16 h-16 mx-auto mb-4 opacity-60" />
                 <h3 class="text-lg font-medium mb-2" style="color: var(--color-text-primary);">No dreams found</h3>
                 <p class="text-sm mb-4" style="color: var(--color-text-secondary);">
                     @if($search || $selectedFilter !== 'All')

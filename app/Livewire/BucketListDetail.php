@@ -23,7 +23,7 @@ class BucketListDetail extends Component
             Dialog::toast('Dream marked as pending!');
         } else {
             $this->bucketListItem->markAsCompleted();
-            Dialog::toast('🎉 Dream achieved! Congratulations!');
+            Dialog::toast('Dream achieved! Congratulations!');
         }
 
         $this->bucketListItem->refresh();
@@ -37,14 +37,14 @@ class BucketListDetail extends Component
             'completed_at' => now(),
         ]);
 
-        Dialog::toast('Dream linked to event! 🎯');
+        Dialog::toast('Dream linked to event!');
         $this->bucketListItem->refresh();
     }
 
     public function unlinkFromEvent()
     {
         $this->bucketListItem->update([
-            'linked_event_id' => null
+            'linked_event_id' => null,
         ]);
 
         Dialog::toast('Dream unlinked from event.');
@@ -55,6 +55,7 @@ class BucketListDetail extends Component
     {
         $this->bucketListItem->delete();
         Dialog::toast('Dream removed from your bucket list.');
+
         return redirect()->route('dreams');
     }
 
@@ -63,7 +64,7 @@ class BucketListDetail extends Component
         $recentEvents = Event::latest()->limit(10)->get();
 
         return view('livewire.bucket-list-detail', [
-            'recentEvents' => $recentEvents
+            'recentEvents' => $recentEvents,
         ]);
     }
 }

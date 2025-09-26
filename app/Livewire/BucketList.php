@@ -9,13 +9,14 @@ use Native\Mobile\Facades\Dialog;
 class BucketList extends Component
 {
     public $search = '';
+
     public $selectedFilter = 'All';
 
     public $filters = [
         'All',
         'Pending',
         'Completed',
-        'High Priority'
+        'High Priority',
     ];
 
     public $categories = [
@@ -27,7 +28,7 @@ class BucketList extends Component
         'Health',
         'Relationships',
         'Experiences',
-        'Other'
+        'Other',
     ];
 
     public function render()
@@ -36,10 +37,10 @@ class BucketList extends Component
 
         // Apply search filter
         if ($this->search) {
-            $query->where(function($q) {
-                $q->where('title', 'like', '%' . $this->search . '%')
-                  ->orWhere('description', 'like', '%' . $this->search . '%')
-                  ->orWhere('notes', 'like', '%' . $this->search . '%');
+            $query->where(function ($q) {
+                $q->where('title', 'like', '%'.$this->search.'%')
+                    ->orWhere('description', 'like', '%'.$this->search.'%')
+                    ->orWhere('notes', 'like', '%'.$this->search.'%');
             });
         }
 
@@ -61,7 +62,7 @@ class BucketList extends Component
         $bucketListItems = $query->with('linkedEvent')->get();
 
         return view('livewire.bucket-list', [
-            'bucketListItems' => $bucketListItems
+            'bucketListItems' => $bucketListItems,
         ]);
     }
 
@@ -79,7 +80,7 @@ class BucketList extends Component
             Dialog::toast('Dream marked as pending!');
         } else {
             $item->markAsCompleted();
-            Dialog::toast('🎉 Dream achieved! Congratulations!');
+            Dialog::toast('Dream achieved! Congratulations!');
         }
     }
 }

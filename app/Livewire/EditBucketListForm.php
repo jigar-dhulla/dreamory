@@ -9,11 +9,17 @@ use Native\Mobile\Facades\Dialog;
 class EditBucketListForm extends Component
 {
     public BucketListItem $bucketListItem;
+
     public $title = '';
+
     public $description = '';
+
     public $category = '';
+
     public $priority = 3;
+
     public $target_date = '';
+
     public $notes = '';
 
     public $categories = [
@@ -24,7 +30,7 @@ class EditBucketListForm extends Component
         'Health',
         'Relationships',
         'Experiences',
-        'Other'
+        'Other',
     ];
 
     protected $rules = [
@@ -33,7 +39,7 @@ class EditBucketListForm extends Component
         'category' => 'required|string|in:Travel,Adventure,Learning,Career,Health,Relationships,Experiences,Other',
         'priority' => 'required|integer|between:1,5',
         'target_date' => 'nullable|date',
-        'notes' => 'nullable|string|max:1000'
+        'notes' => 'nullable|string|max:1000',
     ];
 
     public function mount($id)
@@ -62,7 +68,7 @@ class EditBucketListForm extends Component
             'notes' => $this->notes,
         ]);
 
-        Dialog::toast('Dream updated successfully! ✨');
+        Dialog::toast('Dream updated successfully!');
 
         return redirect()->route('dreams.show', $this->bucketListItem->id);
     }
@@ -71,6 +77,7 @@ class EditBucketListForm extends Component
     {
         $this->bucketListItem->delete();
         Dialog::toast('Dream removed from your bucket list.');
+
         return redirect()->route('dreams');
     }
 

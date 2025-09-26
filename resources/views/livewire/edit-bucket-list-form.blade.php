@@ -3,7 +3,7 @@
     <div style="background-color: var(--color-surface);" class="p-4 border-b flex justify-between items-center" style="border-color: var(--color-border);">
         <div class="flex items-center gap-3">
             <a href="/dreams/{{ $bucketListItem->id }}" class="w-9 h-9 rounded-full flex items-center justify-center" style="background-color: var(--color-background);">
-                ←
+                <x-lucide-chevron-left class="w-5 h-5" />
             </a>
             <h2 class="text-xl font-semibold" style="color: var(--color-text-primary);">Edit Dream</h2>
         </div>
@@ -65,7 +65,7 @@
                             class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl transition-colors"
                             style="background-color: {{ $priority >= $i ? 'var(--color-primary)' : 'var(--color-surface)' }}; border: 1px solid var(--color-border);"
                         >
-                            ⭐
+                            <x-lucide-star class="w-6 h-6 {{ $priority >= $i ? 'fill-current text-white' : 'text-gray-400' }}" />
                         </button>
                     @endfor
                 </div>
@@ -105,7 +105,7 @@
                     class="py-4 rounded-xl text-white font-semibold text-lg"
                     style="background-color: var(--color-primary);"
                 >
-                    Save Changes ✨
+                    <x-lucide-sparkles class="w-4 h-4 inline mr-1" />Save Changes
                 </button>
                 <button
                     type="button"
@@ -121,7 +121,7 @@
             <!-- Status Info -->
             @if($bucketListItem->is_completed)
             <div class="bg-green-50 border border-green-200 rounded-xl p-4 text-center">
-                <div class="text-green-600 text-2xl mb-2">🎉</div>
+                <x-lucide-party-popper class="w-8 h-8 text-green-600 mx-auto mb-2" />
                 <p class="text-green-800 font-medium">This dream has been achieved!</p>
                 <p class="text-green-600 text-sm mt-1">
                     Completed {{ $bucketListItem->completed_at ? $bucketListItem->completed_at->diffForHumans() : 'recently' }}

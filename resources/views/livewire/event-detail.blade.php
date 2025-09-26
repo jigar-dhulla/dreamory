@@ -7,18 +7,18 @@
 
         <!-- Back Button -->
         <a href="/events" class="absolute top-12 left-4 w-9 h-9 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-lg shadow-lg">
-            ←
+            <x-lucide-chevron-left class="w-5 h-5" />
         </a>
 
         <!-- Action Buttons -->
         <div class="absolute top-12 right-4 flex gap-2">
             <!-- Edit Button -->
             <a href="/events/{{ $event->id }}/edit" class="w-9 h-9 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-sm shadow-lg cursor-pointer">
-                ✏️
+                <x-lucide-edit class="w-4 h-4" />
             </a>
             <!-- Delete Button -->
             <button type="button" wire:click="delete" href="#" class="w-9 h-9 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-sm shadow-lg cursor-pointer">
-                🗑️
+                <x-lucide-trash-2 class="w-4 h-4" />
             </button>
         </div>
 
@@ -27,12 +27,12 @@
             <h1 class="text-2xl font-bold text-white mb-2 drop-shadow-lg">{{ $event->name }}</h1>
             <div class="flex items-center gap-4 text-white/95 text-sm">
                 <div class="flex items-center gap-1">
-                    <span>📅</span>
+                    <x-lucide-calendar class="w-4 h-4" />
                     <span>{{ $event->date_attended ? $event->date_attended->format('M j, Y') : 'No date' }}</span>
                 </div>
                 @if($event->location)
                     <div class="flex items-center gap-1">
-                        <span>📍</span>
+                        <x-lucide-map-pin class="w-4 h-4" />
                         <span>{{ $event->location }}</span>
                     </div>
                 @endif
@@ -45,14 +45,14 @@
         <div class="grid grid-cols-2 gap-5">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-xl flex items-center justify-center text-lg" style="background: linear-gradient(135deg, var(--color-primary)20, var(--color-primary)20);">
-                    ⭐
+                    <x-lucide-star class="w-5 h-5" />
                 </div>
                 <div>
                     <div class="text-xs text-gray-500 uppercase tracking-wide mb-1">Rating</div>
                     <div class="flex items-center gap-2">
                         <div class="flex gap-1">
                             @for($i = 1; $i <= 5; $i++)
-                                <span class="text-sm">{{ $i <= ($event->overall_rating ?? 0) ? '⭐' : '☆' }}</span>
+                                <x-lucide-star class="w-4 h-4 {{ $i <= ($event->overall_rating ?? 0) ? 'fill-current text-yellow-400' : 'text-gray-300' }}" />
                             @endfor
                         </div>
                         <span class="text-sm text-gray-600">({{ $event->overall_rating ?? 0 }}.0)</span>
@@ -62,7 +62,7 @@
 
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-xl flex items-center justify-center text-lg" style="background: linear-gradient(135deg, var(--color-primary)20, var(--color-primary)20);">
-                    🎭
+                    <x-lucide-theater class="w-5 h-5" />
                 </div>
                 <div>
                     <div class="text-xs text-gray-500 uppercase tracking-wide mb-1">Category</div>
@@ -115,7 +115,7 @@
         <div class="space-y-4">
             <div class="flex items-center gap-3">
                 <div class="w-8 h-8 rounded-lg flex items-center justify-center text-sm" style="background: linear-gradient(135deg, var(--color-primary)20, var(--color-primary)20);">
-                    📅
+                    <x-lucide-calendar class="w-4 h-4" />
                 </div>
                 <div>
                     <div class="text-sm text-gray-500">Date Attended</div>
@@ -128,7 +128,7 @@
             @if($event->location)
             <div class="flex items-center gap-3">
                 <div class="w-8 h-8 rounded-lg flex items-center justify-center text-sm" style="background: linear-gradient(135deg, var(--color-primary)20, var(--color-primary)20);">
-                    📍
+                    <x-lucide-map-pin class="w-4 h-4" />
                 </div>
                 <div>
                     <div class="text-sm text-gray-500">Location</div>
@@ -139,7 +139,7 @@
 
             <div class="flex items-center gap-3">
                 <div class="w-8 h-8 rounded-lg flex items-center justify-center text-sm" style="background: linear-gradient(135deg, var(--color-primary)20, var(--color-primary)20);">
-                    📝
+                    <x-lucide-file-text class="w-4 h-4" />
                 </div>
                 <div>
                     <div class="text-sm text-gray-500">Created</div>

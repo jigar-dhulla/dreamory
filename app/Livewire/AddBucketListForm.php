@@ -9,10 +9,15 @@ use Native\Mobile\Facades\Dialog;
 class AddBucketListForm extends Component
 {
     public $title = '';
+
     public $description = '';
+
     public $category = '';
+
     public $priority = 3;
+
     public $target_date = '';
+
     public $notes = '';
 
     public $categories = [
@@ -23,7 +28,7 @@ class AddBucketListForm extends Component
         'Health',
         'Relationships',
         'Experiences',
-        'Other'
+        'Other',
     ];
 
     protected $rules = [
@@ -32,7 +37,7 @@ class AddBucketListForm extends Component
         'category' => 'required|string|in:Travel,Adventure,Learning,Career,Health,Relationships,Experiences,Other',
         'priority' => 'required|integer|between:1,5',
         'target_date' => 'nullable|date|after:today',
-        'notes' => 'nullable|string|max:1000'
+        'notes' => 'nullable|string|max:1000',
     ];
 
     public function save()
@@ -48,7 +53,7 @@ class AddBucketListForm extends Component
             'notes' => $this->notes,
         ]);
 
-        Dialog::toast('Dream added to your bucket list! 🌟');
+        Dialog::toast('Dream added to your bucket list!');
 
         return redirect()->route('dreams');
     }

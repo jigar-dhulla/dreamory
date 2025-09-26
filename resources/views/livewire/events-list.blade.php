@@ -3,7 +3,7 @@
     <div style="background-color: var(--color-surface);" class="p-4 border-b flex justify-between items-center" style="border-color: var(--color-border);">
         <h2 class="text-xl font-semibold" style="color: var(--color-text-primary);">My Events</h2>
         <a href="/events/create" class="w-9 h-9 rounded-full flex items-center justify-center text-white text-lg" style="background-color: var(--color-primary);">
-            +
+            <x-lucide-plus class="w-5 h-5" />
         </a>
     </div>
 
@@ -46,7 +46,7 @@
                     @if($event->overall_rating)
                         <div class="flex gap-1 ml-3">
                             @for($i = 1; $i <= 5; $i++)
-                                <span class="text-sm">{{ $i <= $event->overall_rating ? '⭐' : '' }}</span>
+                                <x-lucide-star class="w-3 h-3 {{ $i <= $event->overall_rating ? 'fill-current text-yellow-400' : 'text-gray-300' }}" />
                             @endfor
                         </div>
                     @endif
@@ -55,7 +55,7 @@
                 <!-- Location -->
                 @if($event->location)
                     <div class="mb-3 text-sm" style="color: var(--color-text-secondary);">
-                        📍 {{ $event->location }}
+                        <x-lucide-map-pin class="w-4 h-4 inline mr-1" /> {{ $event->location }}
                     </div>
                 @endif
 
@@ -80,7 +80,7 @@
             </a>
         @empty
             <div style="background-color: var(--color-surface);" class="rounded-xl p-8 text-center">
-                <div class="text-5xl mb-4">📅</div>
+                <x-lucide-calendar class="w-16 h-16 mx-auto mb-4 opacity-60" />
                 <h3 class="text-lg font-medium mb-2" style="color: var(--color-text-primary);">No events found</h3>
                 <p class="text-sm mb-4" style="color: var(--color-text-secondary);">
                     @if($search || $selectedCategory !== 'All')

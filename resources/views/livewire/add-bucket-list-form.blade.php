@@ -3,7 +3,7 @@
     <div style="background-color: var(--color-surface);" class="p-4 border-b flex justify-between items-center" style="border-color: var(--color-border);">
         <div class="flex items-center gap-3">
             <a href="/dreams" class="w-9 h-9 rounded-full flex items-center justify-center" style="background-color: var(--color-background);">
-                ←
+                <x-lucide-chevron-left class="w-5 h-5" />
             </a>
             <h2 class="text-xl font-semibold" style="color: var(--color-text-primary);">Add Dream</h2>
         </div>

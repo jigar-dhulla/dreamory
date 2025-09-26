@@ -27,7 +27,7 @@
 
         <!-- Dreams Overview -->
         <div style="background-color: var(--color-surface);" class="rounded-xl p-4 mb-6">
-            <h3 class="text-lg font-semibold mb-4" style="color: var(--color-text-primary);">🌟 Dreams Overview</h3>
+            <h3 class="text-lg font-semibold mb-4" style="color: var(--color-text-primary);"><x-lucide-star class="w-5 h-5 inline mr-1" /> Dreams Overview</h3>
             <div class="grid grid-cols-2 gap-4">
                 <div class="text-center">
                     <div class="text-xl font-bold text-green-600">{{ $completedDreams }}</div>
@@ -50,7 +50,7 @@
 
         <!-- Event Categories -->
         <div style="background-color: var(--color-surface);" class="rounded-xl p-4 mb-6">
-            <h3 class="text-lg font-semibold mb-4" style="color: var(--color-text-primary);">📅 Event Categories</h3>
+            <h3 class="text-lg font-semibold mb-4" style="color: var(--color-text-primary);"><x-lucide-calendar class="w-5 h-5 inline mr-1" /> Event Categories</h3>
 
             @forelse($categoryStats as $stat)
                 <div class="flex justify-between items-center py-3 border-b last:border-b-0" style="border-color: var(--color-border);">
@@ -65,7 +65,7 @@
                 </div>
             @empty
                 <div class="text-center py-8">
-                    <div class="text-4xl mb-2">📊</div>
+                    <x-lucide-bar-chart class="w-10 h-10 mx-auto mb-2 opacity-60" />
                     <p class="text-sm" style="color: var(--color-text-secondary);">No event data available yet</p>
                 </div>
             @endforelse
@@ -73,7 +73,7 @@
 
         <!-- Dream Categories -->
         <div style="background-color: var(--color-surface);" class="rounded-xl p-4">
-            <h3 class="text-lg font-semibold mb-4" style="color: var(--color-text-primary);">🌟 Dream Categories</h3>
+            <h3 class="text-lg font-semibold mb-4" style="color: var(--color-text-primary);"><x-lucide-star class="w-5 h-5 inline mr-1" /> Dream Categories</h3>
 
             @forelse($dreamCategoryStats as $stat)
                 <div class="flex justify-between items-center py-3 border-b last:border-b-0" style="border-color: var(--color-border);">
@@ -88,7 +88,7 @@
                 </div>
             @empty
                 <div class="text-center py-8">
-                    <div class="text-4xl mb-2">🌟</div>
+                    <x-lucide-star class="w-10 h-10 mx-auto mb-2 opacity-60" />
                     <p class="text-sm" style="color: var(--color-text-secondary);">No dream data available yet</p>
                 </div>
             @endforelse

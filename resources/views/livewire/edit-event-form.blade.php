@@ -3,7 +3,7 @@
     <div style="background-color: var(--color-surface);" class="p-4 border-b flex justify-between items-center" style="border-color: var(--color-border);">
         <div class="flex items-center gap-3">
             <a href="/events/{{ $event->id }}" class="w-9 h-9 rounded-full flex items-center justify-center" style="background-color: var(--color-background);">
-                ←
+                <x-lucide-chevron-left class="w-5 h-5" />
             </a>
             <h2 class="text-xl font-semibold" style="color: var(--color-text-primary);">Edit Experience</h2>
         </div>
@@ -83,7 +83,7 @@
                             class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl transition-colors"
                             style="background-color: {{ $overall_rating >= $i ? 'var(--color-primary)' : 'var(--color-surface)' }}; border: 1px solid var(--color-border);"
                         >
-                            ⭐
+                            <x-lucide-star class="w-6 h-6 {{ $overall_rating >= $i ? 'fill-current text-white' : 'text-gray-400' }}" />
                         </button>
                     @endfor
                 </div>

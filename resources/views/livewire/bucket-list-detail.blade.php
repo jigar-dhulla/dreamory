@@ -3,12 +3,12 @@
     <div style="background-color: var(--color-surface);" class="p-4 border-b flex justify-between items-center" style="border-color: var(--color-border);">
         <div class="flex items-center gap-3">
             <a href="/dreams" class="w-9 h-9 rounded-full flex items-center justify-center" style="background-color: var(--color-background);">
-                ←
+                <x-lucide-chevron-left class="w-5 h-5" />
             </a>
             <h2 class="text-xl font-semibold truncate" style="color: var(--color-text-primary);">Dream Details</h2>
         </div>
         <a href="/dreams/{{ $bucketListItem->id }}/edit" class="w-9 h-9 rounded-full flex items-center justify-center" style="background-color: var(--color-primary); color: white;">
-            ✏️
+            <x-lucide-edit class="w-4 h-4" />
         </a>
     </div>
 
@@ -30,11 +30,11 @@
                 </div>
                 <div class="flex items-center gap-3">
                     @if($bucketListItem->is_completed)
-                        <div class="text-green-500 text-2xl">✅</div>
+                        <x-lucide-check-circle class="w-6 h-6 text-green-500" />
                     @endif
                     <div class="flex gap-1">
                         @for($i = 1; $i <= $bucketListItem->priority; $i++)
-                            <span class="text-lg">⭐</span>
+                            <x-lucide-star class="w-4 h-4 fill-current text-yellow-400" />
                         @endfor
                     </div>
                 </div>
@@ -46,7 +46,7 @@
                 class="w-full py-3 rounded-xl font-medium transition-colors {{ $bucketListItem->is_completed ? 'text-orange-600' : 'text-white' }}"
                 style="background-color: {{ $bucketListItem->is_completed ? '#fff7ed' : 'var(--color-success)' }};"
             >
-                {{ $bucketListItem->is_completed ? '↩️ Mark as Pending' : '✨ Mark as Achieved!' }}
+                {{ $bucketListItem->is_completed ? '' : '' }}<x-lucide-{{ $bucketListItem->is_completed ? 'undo' : 'sparkles' }}> class="w-4 h-4 inline mr-1" />{{ $bucketListItem->is_completed ? ' Mark as Pending' : ' Mark as Achieved!' }}
             </button>
         </div>
 
@@ -63,7 +63,7 @@
         <!-- Linked Event -->
         @if($bucketListItem->linkedEvent)
         <div style="background-color: var(--color-surface);" class="rounded-xl p-6 mb-6">
-            <h3 class="text-lg font-semibold mb-3" style="color: var(--color-text-primary);">🎯 Linked to Event</h3>
+            <h3 class="text-lg font-semibold mb-3" style="color: var(--color-text-primary);"><x-lucide-target class="w-5 h-5 inline mr-1" /> Linked to Event</h3>
             <a href="/events/{{ $bucketListItem->linkedEvent->id }}" class="block p-4 rounded-lg border hover:scale-[1.02] transition-transform" style="border-color: var(--color-border);">
                 <div class="flex justify-between items-start">
                     <div class="flex-1">
@@ -71,7 +71,7 @@
                         <p class="text-sm mt-1" style="color: var(--color-text-secondary);">
                             {{ $bucketListItem->linkedEvent->date_attended ? $bucketListItem->linkedEvent->date_attended->format('M j, Y') : 'No date' }}
                             @if($bucketListItem->linkedEvent->overall_rating)
-                                • {!! str_repeat('⭐', $bucketListItem->linkedEvent->overall_rating) !!}
+                                • @for($i = 1; $i <= $bucketListItem->linkedEvent->overall_rating; $i++)<x-lucide-star class="w-3 h-3 inline fill-current text-yellow-400" />@endfor
                             @endif
                         </p>
                     </div>
@@ -87,7 +87,7 @@
         </div>
         @elseif($bucketListItem->is_completed)
         <div style="background-color: var(--color-surface);" class="rounded-xl p-6 mb-6">
-            <h3 class="text-lg font-semibold mb-3" style="color: var(--color-text-primary);">🎯 Link to Event</h3>
+            <h3 class="text-lg font-semibold mb-3" style="color: var(--color-text-primary);"><x-lucide-target class="w-5 h-5 inline mr-1" /> Link to Event</h3>
             <p class="text-sm mb-4" style="color: var(--color-text-secondary);">
                 Connect this achievement to an event in your memory journal.
             </p>
@@ -130,7 +130,7 @@
         <!-- Achievement Date -->
         @if($bucketListItem->is_completed && $bucketListItem->completed_at)
         <div style="background-color: var(--color-surface);" class="rounded-xl p-6 mb-6">
-            <h3 class="text-lg font-semibold mb-3" style="color: var(--color-text-primary);">🎉 Achievement Date</h3>
+            <h3 class="text-lg font-semibold mb-3" style="color: var(--color-text-primary);"><x-lucide-party-popper class="w-5 h-5 inline mr-1" /> Achievement Date</h3>
             <p class="text-base" style="color: var(--color-text-secondary);">
                 Achieved on {{ $bucketListItem->completed_at->format('F j, Y \a\t g:i A') }}
             </p>
