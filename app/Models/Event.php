@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 
 class Event extends Model
@@ -44,5 +45,13 @@ class Event extends Model
         $data = base64_encode(Storage::get($this->photo_path));
         $mimeType = Storage::mimeType($this->photo_path);
         return "data:$mimeType;base64,$data";
+    }
+
+    /**
+     * Get the bucket list items that were completed with this event.
+     */
+    public function linkedBucketListItems(): HasMany
+    {
+        return $this->hasMany(BucketListItem::class, 'linked_event_id');
     }
 }

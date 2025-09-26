@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\BucketListItem;
 use App\Models\Event;
 use Livewire\Component;
 
@@ -13,16 +14,20 @@ class Dashboard extends Component
         $averageRating = Event::whereNotNull('overall_rating')->avg('overall_rating');
         $recentEvents = Event::latest()->limit(5)->get();
 
-        // For MVP, we'll use static values for Dreams/Bucket List stats
-        $dreamsAchieved = 12; // This will be dynamic later
-        $bucketListItems = 23; // This will be dynamic later
+        // Real bucket list statistics
+        $totalDreams = BucketListItem::count();
+        $dreamsAchieved = BucketListItem::completed()->count();
+        $pendingDreams = BucketListItem::pending()->count();
+        $recentCompletedDreams = BucketListItem::completed()->latest('completed_at')->limit(3)->get();
 
         return view('livewire.dashboard', [
             'totalEvents' => $totalEvents,
             'dreamsAchieved' => $dreamsAchieved,
-            'bucketListItems' => $bucketListItems,
+            'totalDreams' => $totalDreams,
+            'pendingDreams' => $pendingDreams,
             'averageRating' => $averageRating ? round($averageRating, 1) : 0,
             'recentEvents' => $recentEvents,
+            'recentCompletedDreams' => $recentCompletedDreams,
         ]);
     }
 }

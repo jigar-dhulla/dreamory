@@ -6,7 +6,7 @@
     </div>
 
     <!-- Quick Stats Grid -->
-    <div class="grid grid-cols-2 gap-4 mb-6">
+    <div class="grid grid-cols-2 gap-3 mb-6">
         <div class="bg-white/15 backdrop-blur-md rounded-2xl p-4 text-center">
             <div class="text-2xl font-bold mb-1">{{ $totalEvents }}</div>
             <div class="text-xs opacity-80">Events Logged</div>
@@ -15,7 +15,35 @@
             <div class="text-2xl font-bold mb-1">{{ $averageRating }}</div>
             <div class="text-xs opacity-80">Avg Rating</div>
         </div>
+        <div class="bg-white/15 backdrop-blur-md rounded-2xl p-4 text-center">
+            <div class="text-2xl font-bold mb-1">{{ $dreamsAchieved }}</div>
+            <div class="text-xs opacity-80">Dreams Achieved</div>
+        </div>
+        <div class="bg-white/15 backdrop-blur-md rounded-2xl p-4 text-center">
+            <div class="text-2xl font-bold mb-1">{{ $pendingDreams }}</div>
+            <div class="text-xs opacity-80">Dreams Pending</div>
+        </div>
     </div>
+
+    <!-- Recent Achievements Section -->
+    @if($recentCompletedDreams->count() > 0)
+    <div class="mb-6">
+        <h3 class="text-lg font-semibold mb-4">🎉 Recent Achievements</h3>
+        @foreach($recentCompletedDreams as $dream)
+            <div class="bg-white/10 rounded-xl p-4 mb-3 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center flex-shrink-0">
+                    <span class="text-white text-lg">🌟</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <h4 class="text-sm font-medium truncate">{{ $dream->title }}</h4>
+                    <p class="text-xs opacity-70">
+                        Achieved {{ $dream->completed_at ? $dream->completed_at->diffForHumans() : 'recently' }}
+                    </p>
+                </div>
+            </div>
+        @endforeach
+    </div>
+    @endif
 
     <!-- Recent Experiences Section -->
     <div class="recent-section">

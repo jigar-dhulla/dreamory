@@ -25,9 +25,9 @@
                 <div class="text-xl">📅</div>
                 <span class="text-xs">Events</span>
             </a>
-            <a href="/events/create" class="flex flex-col items-center gap-1 text-sm" style="color: {{ request()->is('events/create') ? 'var(--color-primary)' : 'var(--color-text-secondary)' }}">
-                <div class="text-xl">✨</div>
-                <span class="text-xs">Add</span>
+            <a href="/dreams" class="flex flex-col items-center gap-1 text-sm" style="color: {{ request()->is('dreams*') ? 'var(--color-primary)' : 'var(--color-text-secondary)' }}">
+                <div class="text-xl">🌟</div>
+                <span class="text-xs">Dreams</span>
             </a>
             <a href="/stats" class="flex flex-col items-center gap-1 text-sm" style="color: {{ request()->is('stats*') ? 'var(--color-primary)' : 'var(--color-text-secondary)' }}">
                 <div class="text-xl">📊</div>
