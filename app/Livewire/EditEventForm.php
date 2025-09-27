@@ -3,21 +3,32 @@
 namespace App\Livewire;
 
 use App\Models\Event;
+use Illuminate\Support\Facades\Storage;
+use Livewire\Attributes\On;
 use Livewire\Component;
-use Livewire\WithFileUploads;
+use Native\Mobile\Events\Gallery\MediaSelected;
+use Native\Mobile\Facades\Camera;
+use Native\Mobile\Facades\Dialog;
 
 class EditEventForm extends Component
 {
-    use WithFileUploads;
-
     public Event $event;
+
     public $name = '';
+
     public $category = '';
+
     public $location = '';
+
     public $date_attended = '';
+
     public $overall_rating = '';
-    public $photo;
+
+    public $photo_path = null;
+
     public $notes = '';
+
+    public $photos = [];
 
     public $categories = [
         'Food & Dining',
@@ -25,7 +36,7 @@ class EditEventForm extends Component
         'Travel',
         'Activities',
         'Culture',
-        'Other'
+        'Other',
     ];
 
     protected $rules = [
@@ -34,8 +45,7 @@ class EditEventForm extends Component
         'location' => 'nullable|string|max:255',
         'date_attended' => 'required|date',
         'overall_rating' => 'required|integer|between:1,5',
-        'photo' => 'nullable|image|max:2048',
-        'notes' => 'nullable|string|max:1000'
+        'notes' => 'nullable|string|max:1000',
     ];
 
     public function mount($id)
@@ -48,17 +58,45 @@ class EditEventForm extends Component
         $this->location = $this->event->location ?? '';
         $this->date_attended = $this->event->date_attended ? $this->event->date_attended->format('Y-m-d') : '';
         $this->overall_rating = $this->event->overall_rating ?? '';
+        $this->photo_path = $this->event->photo_path;
         $this->notes = $this->event->notes ?? '';
+    }
+
+    public function pickImage()
+    {
+        Camera::pickImages('images', false);
+    }
+
+    #[On('native:'.MediaSelected::class)]
+    public function handleMediaSelected($success, $files, $count)
+    {
+        if (! $success) {
+            Dialog::toast('Failed to select the media.');
+
+            return;
+        }
+        $this->photos = [];
+
+        foreach ($files as $file) {
+            if ($file['type'] === 'video') {
+                Dialog::toast('Videos are not supported yet');
+            } else {
+                // For photos, use base64 data URI (small files)
+                $fileContent = file_get_contents($file['path']);
+                $data = base64_encode($fileContent);
+                $filePath = 'public/photos/'.basename($file['path']);
+                if (Storage::put($filePath, $fileContent) === false) {
+                    Dialog::toast('Failed to upload photo');
+                }
+                $this->photos[] = "data:{$file['mimeType']};base64,{$data}";
+                $this->photo_path = $filePath;
+            }
+        }
     }
 
     public function save()
     {
         $this->validate();
-
-        $photoPath = $this->event->photo_path;
-        if ($this->photo) {
-            $photoPath = $this->photo->store('event-photos', 'public');
-        }
 
         $this->event->update([
             'name' => $this->name,
@@ -66,7 +104,7 @@ class EditEventForm extends Component
             'location' => $this->location,
             'date_attended' => $this->date_attended,
             'overall_rating' => $this->overall_rating,
-            'photo_path' => $photoPath,
+            'photo_path' => $this->photo_path,
             'notes' => $this->notes,
         ]);
 

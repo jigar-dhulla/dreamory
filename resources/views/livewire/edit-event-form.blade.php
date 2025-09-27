@@ -90,38 +90,53 @@
                 @error('overall_rating') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
 
-            <!-- Current Photo Display -->
-            @if($event->photo_path)
+            <!-- Photo Selection -->
             <div class="mb-6">
-                <label class="block text-sm font-medium mb-2" style="color: var(--color-text-primary);">Current Photo</label>
-                <div class="mb-4">
-                    <img src="{{ Storage::url($event->photo_path) }}" class="w-32 h-32 object-cover rounded-xl" alt="Current photo">
-                </div>
-            </div>
-            @endif
-
-            <!-- Photo Upload -->
-            <div class="mb-6">
-                <label class="block text-sm font-medium mb-2" style="color: var(--color-text-primary);">
-                    {{ $event->photo_path ? 'Replace Photo' : 'Add Photo' }}
-                </label>
+                <label class="block text-sm font-medium mb-2" style="color: var(--color-text-primary);">Photo</label>
                 <div class="border-2 border-dashed rounded-xl p-6 text-center" style="border-color: var(--color-border);">
-                    @if ($photo)
+                    @if (count($photos) > 0)
+                        @foreach($photos as $selectedPhoto)
+                            <div class="mb-3">
+                                <img src="{{ $selectedPhoto }}" alt="Selected Photo" class="w-24 h-24 rounded-xl mx-auto object-cover mb-2">
+                            </div>
+                        @endforeach
+                        <button
+                            type="button"
+                            wire:click="pickImage"
+                            class="px-6 py-2 rounded-lg font-medium text-sm mb-2"
+                            style="background-color: var(--color-primary); color: white;"
+                        >
+                            Change Photo
+                        </button>
+                    @elseif($event->photo_path)
                         <div class="mb-3">
-                            <img src="{{ $photo->temporaryUrl() }}" class="w-24 h-24 object-cover rounded-xl mx-auto">
+                            <img src="{{ Storage::url($event->photo_path) }}" alt="Current Photo" class="w-24 h-24 rounded-xl mx-auto object-cover mb-2">
                         </div>
+                        <button
+                            type="button"
+                            wire:click="pickImage"
+                            class="px-6 py-2 rounded-lg font-medium text-sm mb-2"
+                            style="background-color: var(--color-primary); color: white;"
+                        >
+                            Change Photo
+                        </button>
+                    @else
+                        <div class="mb-3">
+                            <div class="w-24 h-24 rounded-xl mx-auto flex items-center justify-center text-4xl" style="background-color: var(--color-background);">
+                                <x-lucide-camera class="w-10 h-10 opacity-60" />
+                            </div>
+                        </div>
+                        <button
+                            type="button"
+                            wire:click="pickImage"
+                            class="px-6 py-3 rounded-lg font-medium"
+                            style="background-color: var(--color-primary); color: white;"
+                        >
+                            Select Photo
+                        </button>
                     @endif
-                    <input
-                        type="file"
-                        wire:model="photo"
-                        accept="image/*"
-                        class="w-full"
-                    >
-                    <p class="text-sm mt-2" style="color: var(--color-text-secondary);">
-                        Upload an image (max 2MB){{ $event->photo_path ? ' - Leave empty to keep current photo' : '' }}
-                    </p>
+                    <p class="text-sm mt-2" style="color: var(--color-text-secondary);">Tap to select an image from your gallery</p>
                 </div>
-                @error('photo') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
 
             <!-- Notes -->

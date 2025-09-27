@@ -1,6 +1,6 @@
 <div style="background-color: var(--color-background);" class="min-h-screen">
     <!-- Header -->
-    <div style="background-color: var(--color-surface);" class="p-4 border-b flex justify-between items-center" style="border-color: var(--color-border);">
+    <div style="background-color: var(--color-surface); border-color: var(--color-border);" class="p-4 border-b flex justify-between items-center">
         <div class="flex items-center gap-3">
             <a href="/dreams" class="w-9 h-9 rounded-full flex items-center justify-center" style="background-color: var(--color-background);">
                 <x-lucide-chevron-left class="w-5 h-5" />
@@ -46,7 +46,11 @@
                 class="w-full py-3 rounded-xl font-medium transition-colors {{ $bucketListItem->is_completed ? 'text-orange-600' : 'text-white' }}"
                 style="background-color: {{ $bucketListItem->is_completed ? '#fff7ed' : 'var(--color-success)' }};"
             >
-                {{ $bucketListItem->is_completed ? '' : '' }}<x-lucide-{{ $bucketListItem->is_completed ? 'undo' : 'sparkles' }}> class="w-4 h-4 inline mr-1" />{{ $bucketListItem->is_completed ? ' Mark as Pending' : ' Mark as Achieved!' }}
+                @if($bucketListItem->is_completed)
+                    <x-lucide-undo class="w-4 h-4 inline mr-1" /> Mark as Pending
+                @else
+                    <x-lucide-sparkles class="w-4 h-4 inline mr-1" /> Mark as Achieved!
+                @endif
             </button>
         </div>
 
