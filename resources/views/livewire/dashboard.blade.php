@@ -1,7 +1,7 @@
 <div class="text-white p-5 min-h-screen" style="background: linear-gradient(to bottom right, var(--color-gradient-start), var(--color-gradient-end))">
     <!-- Welcome Header -->
     <div class="mb-6">
-        <h1 class="text-2xl font-bold mb-1">Hello, Explorer! <x-lucide-hand class="w-6 h-6 inline" /></h1>
+        <h1 class="text-2xl font-bold mb-1">Hello, Dreamer! <x-lucide-hand class="w-6 h-6 inline" /></h1>
         <p class="opacity-80 text-sm">Your memory journey continues...</p>
     </div>
 
