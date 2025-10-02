@@ -6,6 +6,7 @@ use App\Models\BucketListItem;
 use App\Models\Event;
 use Livewire\Component;
 use Native\Mobile\Facades\Dialog;
+use Native\Mobile\Facades\Haptics;
 
 class BucketListDetail extends Component
 {
@@ -24,6 +25,7 @@ class BucketListDetail extends Component
         } else {
             $this->bucketListItem->markAsCompleted();
             Dialog::toast('Dream achieved! Congratulations!');
+            Haptics::vibrate();
         }
 
         $this->bucketListItem->refresh();
