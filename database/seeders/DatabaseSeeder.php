@@ -19,5 +19,8 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        // Seed event photos for galleries
+        $this->call(EventPhotoSeeder::class);
     }
 }

@@ -12,7 +12,7 @@ class EventDetail extends Component
 
     public function mount($id)
     {
-        $this->event = Event::findOrFail($id);
+        $this->event = Event::with('photos')->findOrFail($id);
     }
 
     public function delete()

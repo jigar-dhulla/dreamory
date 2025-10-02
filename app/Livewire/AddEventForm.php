@@ -42,7 +42,7 @@ class AddEventForm extends Component
 
     public function pickImage()
     {
-        Camera::pickImages('images', false);
+        Camera::pickImages('images', true);
     }
 
     #[On('native:'. MediaSelected::class)]
@@ -55,39 +55,50 @@ class AddEventForm extends Component
         $this->photos = [];
 
         foreach ($files as $file) {
-            if ($file['type'] === 'video') {
-                Dialog::toast('Videos are not supported yet');
-            } else {
-                // For photos, use base64 data URI (small files)
-                $fileContent = file_get_contents($file['path']);
-                $data = base64_encode($fileContent);
-                $filePath = 'public/photos/' . basename($file['path']);
-                if(false === Storage::put($filePath, $fileContent)) {
-                    Dialog::toast('Failed to upload photo');
-                };
-                $this->photos[] = "data:{$file['mimeType']};base64,{$data}";
-                $this->photo_path = $filePath;
+            $fileContent = file_get_contents($file['path']);
+            $data = base64_encode($fileContent);
+            $filePath = 'public/photos/' . basename($file['path']);
+            if (false === Storage::put($filePath, $fileContent)) {
+                Dialog::toast('Failed to upload photo');
             }
+            $this->photos[] = [
+                'path' => $filePath,
+                'data' => "data:{$file['mimeType']};base64,{$data}",
+            ];
         }
-
+        // Set header photo path to the first photo if available
+        if (!empty($this->photos)) {
+            $this->photo_path = $this->photos[0]['path'];
+        }
     }
 
     public function save()
     {
         $this->validate();
 
-        Event::create([
+        // Set the first photo as header photo if available
+        $headerPhotoPath = $this->photo_path;
+
+        $event = Event::create([
             'name' => $this->name,
             'category' => $this->category,
             'location' => $this->location,
             'date_attended' => $this->date_attended,
             'overall_rating' => $this->overall_rating,
-            'photo_path' => $this->photo_path,
+            'photo_path' => $headerPhotoPath,
             'notes' => $this->notes,
         ]);
 
-        session()->flash('message', 'Event saved successfully!');
+        // Save all gallery photos
+        if (!empty($this->photos)) {
+            foreach ($this->photos as $photo) {
+                $event->photos()->create([
+                    'photo_path' => $photo['path'],
+                ]);
+            }
+        }
 
+        session()->flash('message', 'Event saved successfully!');
         return redirect()->route('events');
     }
 

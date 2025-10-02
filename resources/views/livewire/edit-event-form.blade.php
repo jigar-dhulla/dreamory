@@ -92,21 +92,21 @@
 
             <!-- Photo Selection -->
             <div class="mb-6">
-                <label class="block text-sm font-medium mb-2" style="color: var(--color-text-primary);">Photo</label>
+                <label class="block text-sm font-medium mb-2" style="color: var(--color-text-primary);">Gallery Photos</label>
                 <div class="border-2 border-dashed rounded-xl p-6 text-center" style="border-color: var(--color-border);">
                     @if (count($photos) > 0)
-                        @foreach($photos as $selectedPhoto)
-                            <div class="mb-3">
-                                <img src="{{ $selectedPhoto }}" alt="Selected Photo" class="w-24 h-24 rounded-xl mx-auto object-cover mb-2">
-                            </div>
-                        @endforeach
+                        <div class="flex flex-wrap gap-2 justify-center mb-3">
+                            @foreach($photos as $selectedPhoto)
+                                <img src="{{ is_array($selectedPhoto) ? $selectedPhoto['data'] : $selectedPhoto }}" alt="Gallery Photo" class="w-24 h-24 rounded-xl object-cover">
+                            @endforeach
+                        </div>
                         <button
                             type="button"
                             wire:click="pickImage"
                             class="px-6 py-2 rounded-lg font-medium text-sm mb-2"
                             style="background-color: var(--color-primary); color: white;"
                         >
-                            Change Photo
+                            Add More Photos
                         </button>
                     @elseif($event->photo_path)
                         <div class="mb-3">
@@ -118,7 +118,7 @@
                             class="px-6 py-2 rounded-lg font-medium text-sm mb-2"
                             style="background-color: var(--color-primary); color: white;"
                         >
-                            Change Photo
+                            Add More Photos
                         </button>
                     @else
                         <div class="mb-3">
@@ -132,7 +132,7 @@
                             class="px-6 py-3 rounded-lg font-medium"
                             style="background-color: var(--color-primary); color: white;"
                         >
-                            Select Photo
+                            Select Photos
                         </button>
                     @endif
                     <p class="text-sm mt-2" style="color: var(--color-text-secondary);">Tap to select an image from your gallery</p>

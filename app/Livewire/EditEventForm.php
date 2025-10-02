@@ -50,7 +50,7 @@ class EditEventForm extends Component
 
     public function mount($id)
     {
-        $this->event = Event::findOrFail($id);
+        $this->event = Event::with('photos')->findOrFail($id);
 
         // Populate form with existing values
         $this->name = $this->event->name;
@@ -60,11 +60,27 @@ class EditEventForm extends Component
         $this->overall_rating = $this->event->overall_rating ?? '';
         $this->photo_path = $this->event->photo_path;
         $this->notes = $this->event->notes ?? '';
+
+        // Load gallery photos as array of ['path' => ..., 'data' => ...]
+        $this->photos = [];
+        foreach ($this->event->photos as $photo) {
+            $filePath = $photo->photo_path;
+            $data = null;
+            if (\Storage::exists($filePath)) {
+                $fileContent = \Storage::get($filePath);
+                $mimeType = \Storage::mimeType($filePath);
+                $data = "data:{$mimeType};base64," . base64_encode($fileContent);
+            }
+            $this->photos[] = [
+                'path' => $filePath,
+                'data' => $data,
+            ];
+        }
     }
 
     public function pickImage()
     {
-        Camera::pickImages('images', false);
+        Camera::pickImages('images', true);
     }
 
     #[On('native:'.MediaSelected::class)]
@@ -72,7 +88,6 @@ class EditEventForm extends Component
     {
         if (! $success) {
             Dialog::toast('Failed to select the media.');
-
             return;
         }
         $this->photos = [];
@@ -81,16 +96,21 @@ class EditEventForm extends Component
             if ($file['type'] === 'video') {
                 Dialog::toast('Videos are not supported yet');
             } else {
-                // For photos, use base64 data URI (small files)
                 $fileContent = file_get_contents($file['path']);
                 $data = base64_encode($fileContent);
-                $filePath = 'public/photos/'.basename($file['path']);
-                if (Storage::put($filePath, $fileContent) === false) {
+                $filePath = 'public/photos/' . basename($file['path']);
+                if (false === \Storage::put($filePath, $fileContent)) {
                     Dialog::toast('Failed to upload photo');
                 }
-                $this->photos[] = "data:{$file['mimeType']};base64,{$data}";
-                $this->photo_path = $filePath;
+                $this->photos[] = [
+                    'path' => $filePath,
+                    'data' => "data:{$file['mimeType']};base64,{$data}",
+                ];
             }
+        }
+        // Set header photo path to the first photo if available
+        if (!empty($this->photos)) {
+            $this->photo_path = $this->photos[0]['path'];
         }
     }
 
@@ -108,8 +128,17 @@ class EditEventForm extends Component
             'notes' => $this->notes,
         ]);
 
-        session()->flash('message', 'Event updated successfully!');
+        // Update gallery photos: remove old, add new
+        $this->event->photos()->delete();
+        if (!empty($this->photos)) {
+            foreach ($this->photos as $photo) {
+                $this->event->photos()->create([
+                    'photo_path' => $photo['path'],
+                ]);
+            }
+        }
 
+        session()->flash('message', 'Event updated successfully!');
         return redirect()->route('events.show', $this->event->id);
     }
 

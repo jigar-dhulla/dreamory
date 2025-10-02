@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\EventPhoto;
 use Illuminate\Support\Facades\Storage;
 
 class Event extends Model
@@ -54,4 +55,12 @@ class Event extends Model
     {
         return $this->hasMany(BucketListItem::class, 'linked_event_id');
     }
+
+        /**
+         * Get all photos for the event (gallery).
+         */
+        public function photos(): HasMany
+        {
+            return $this->hasMany(EventPhoto::class);
+        }
 }

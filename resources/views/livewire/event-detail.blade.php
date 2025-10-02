@@ -109,6 +109,40 @@
     </div>
     @endif
 
+    <!-- Photo Gallery Section -->
+    @if($event->photos->count() > 0)
+    <div style="background-color: var(--color-surface);" class="mx-4 mt-4 rounded-2xl p-5 shadow-sm">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-lg font-bold" style="color: var(--color-text-primary);">Photos</h3>
+            <a href="/events/{{ $event->id }}/edit" class="text-sm font-medium cursor-pointer" style="color: var(--color-primary);">Add More</a>
+        </div>
+        <div class="grid grid-cols-3 gap-2">
+            @foreach($event->photos->take(9) as $index => $photo)
+                <div class="aspect-square bg-gray-200 rounded-xl overflow-hidden relative cursor-pointer {{ $index == 0 ? 'col-span-2 row-span-2' : '' }}">
+                    @if(\Storage::exists($photo->photo_path))
+                        @php
+                            $fileContent = \Storage::get($photo->photo_path);
+                            $mimeType = \Storage::mimeType($photo->photo_path);
+                            $photoData = "data:{$mimeType};base64," . base64_encode($fileContent);
+                        @endphp
+                        <img src="{{ $photoData }}" class="w-full h-full object-cover" alt="Event photo">
+                    @else
+                        <div class="w-full h-full flex items-center justify-center text-gray-400" style="background: linear-gradient(45deg, var(--color-gradient-start), var(--color-gradient-end));">
+                            <x-lucide-image class="w-8 h-8" />
+                        </div>
+                    @endif
+
+                    @if($index == 8 && $event->photos->count() > 9)
+                        <div class="absolute inset-0 bg-black/70 flex items-center justify-center">
+                            <span class="text-white font-medium text-sm">+{{ $event->photos->count() - 9 }}</span>
+                        </div>
+                    @endif
+                </div>
+            @endforeach
+        </div>
+    </div>
+    @endif
+
     <!-- Event Details Section -->
     <div style="background-color: var(--color-surface);" class="mx-4 mt-4 rounded-2xl p-5 shadow-sm">
         <h3 class="text-lg font-bold mb-4" style="color: var(--color-text-primary);">Event Details</h3>

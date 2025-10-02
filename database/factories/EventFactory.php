@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Event>
@@ -19,13 +20,13 @@ class EventFactory extends Factory
         $categories = ['Food & Dining', 'Music', 'Travel', 'Activities', 'Culture', 'Other'];
 
         return [
-            'name' => fake()->sentence(3),
-            'category' => fake()->randomElement($categories),
-            'location' => fake()->city() . ', ' . fake()->country(),
-            'date_attended' => fake()->dateTimeBetween('-2 years', 'now')->format('Y-m-d'),
-            'overall_rating' => fake()->numberBetween(1, 5),
-            'photo_path' => null, // Will be handled by file uploads later
-            'notes' => fake()->optional(0.7)->paragraph(2),
+            'name' => $this->faker->sentence(3),
+            'category' => $this->faker->randomElement($categories),
+            'location' => $this->faker->city() . ', ' . $this->faker->country(),
+            'date_attended' => $this->faker->date(),
+            'overall_rating' => $this->faker->numberBetween(1, 5),
+            'photo_path' => 'events/' . Str::random(10) . '.jpg',
+            'notes' => $this->faker->paragraph,
         ];
     }
 }
