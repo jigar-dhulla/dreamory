@@ -55,20 +55,16 @@ class AddEventForm extends Component
         $this->photos = [];
 
         foreach ($files as $file) {
-            if ($file['type'] === 'video') {
-                Dialog::toast('Videos are not supported yet');
-            } else {
-                $fileContent = file_get_contents($file['path']);
-                $data = base64_encode($fileContent);
-                $filePath = 'public/photos/' . basename($file['path']);
-                if (false === Storage::put($filePath, $fileContent)) {
-                    Dialog::toast('Failed to upload photo');
-                }
-                $this->photos[] = [
-                    'path' => $filePath,
-                    'data' => "data:{$file['mimeType']};base64,{$data}",
-                ];
+            $fileContent = file_get_contents($file['path']);
+            $data = base64_encode($fileContent);
+            $filePath = 'public/photos/' . basename($file['path']);
+            if (false === Storage::put($filePath, $fileContent)) {
+                Dialog::toast('Failed to upload photo');
             }
+            $this->photos[] = [
+                'path' => $filePath,
+                'data' => "data:{$file['mimeType']};base64,{$data}",
+            ];
         }
         // Set header photo path to the first photo if available
         if (!empty($this->photos)) {

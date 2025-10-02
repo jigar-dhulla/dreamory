@@ -80,7 +80,7 @@ class EditEventForm extends Component
 
     public function pickImage()
     {
-        Camera::pickImages('images', false);
+        Camera::pickImages('images', true);
     }
 
     #[On('native:'.MediaSelected::class)]
