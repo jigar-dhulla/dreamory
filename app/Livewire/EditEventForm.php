@@ -24,7 +24,7 @@ class EditEventForm extends Component
 
     public $overall_rating = '';
 
-    public $photo_path = null;
+    public $header_photo_path = null;
 
     public $notes = '';
 
@@ -58,7 +58,7 @@ class EditEventForm extends Component
         $this->location = $this->event->location ?? '';
         $this->date_attended = $this->event->date_attended ? $this->event->date_attended->format('Y-m-d') : '';
         $this->overall_rating = $this->event->overall_rating ?? '';
-        $this->photo_path = $this->event->photo_path;
+        $this->header_photo_path = $this->event->photo_path;
         $this->notes = $this->event->notes ?? '';
 
         // Load gallery photos as array of ['path' => ..., 'data' => ...]
@@ -110,7 +110,7 @@ class EditEventForm extends Component
         }
         // Set header photo path to the first photo if available
         if (!empty($this->photos)) {
-            $this->photo_path = $this->photos[0]['path'];
+            $this->header_photo_path = $this->photos[0]['path'];
         }
     }
 
@@ -124,12 +124,13 @@ class EditEventForm extends Component
             'location' => $this->location,
             'date_attended' => $this->date_attended,
             'overall_rating' => $this->overall_rating,
-            'photo_path' => $this->photo_path,
+            'photo_path' => $this->header_photo_path,
             'notes' => $this->notes,
         ]);
 
         // Update gallery photos: remove old, add new
         $this->event->photos()->delete();
+        $this->keepFirstPhotoAsHeaderPhoto();
         if (!empty($this->photos)) {
             foreach ($this->photos as $photo) {
                 $this->event->photos()->create([
@@ -145,5 +146,11 @@ class EditEventForm extends Component
     public function render()
     {
         return view('livewire.edit-event-form');
+    }
+
+    private function keepFirstPhotoAsHeaderPhoto(): void
+    {
+        unset($this->photos[0]);
+        $this->photos = array_values($this->photos);
     }
 }

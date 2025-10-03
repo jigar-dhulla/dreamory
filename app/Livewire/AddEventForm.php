@@ -18,7 +18,7 @@ class AddEventForm extends Component
     public $location = '';
     public $date_attended = '';
     public $overall_rating = '';
-    public $photo_path = null;
+    public $header_photo_path = null;
     public $notes = '';
     public $photos = [];
 
@@ -68,7 +68,7 @@ class AddEventForm extends Component
         }
         // Set header photo path to the first photo if available
         if (!empty($this->photos)) {
-            $this->photo_path = $this->photos[0]['path'];
+            $this->header_photo_path = $this->photos[0]['path'];
         }
     }
 
@@ -76,18 +76,17 @@ class AddEventForm extends Component
     {
         $this->validate();
 
-        // Set the first photo as header photo if available
-        $headerPhotoPath = $this->photo_path;
-
         $event = Event::create([
             'name' => $this->name,
             'category' => $this->category,
             'location' => $this->location,
             'date_attended' => $this->date_attended,
             'overall_rating' => $this->overall_rating,
-            'photo_path' => $headerPhotoPath,
+            'photo_path' => $this->header_photo_path,
             'notes' => $this->notes,
         ]);
+
+        $this->keepFirstPhotoAsHeaderPhoto();
 
         // Save all gallery photos
         if (!empty($this->photos)) {
@@ -105,5 +104,11 @@ class AddEventForm extends Component
     public function render()
     {
         return view('livewire.add-event-form');
+    }
+
+    private function keepFirstPhotoAsHeaderPhoto(): void
+    {
+        unset($this->photos[0]);
+        $this->photos = array_values($this->photos);
     }
 }
